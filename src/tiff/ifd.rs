@@ -66,7 +66,7 @@ impl Value {
         match self {
             Value::Unsigned(val) => Ok(val),
             val => Err(::image::ImageError::FormatError(format!(
-                "Expected unsigned integer, {} found.", val
+                "Expected unsigned integer, {:?} found.", val
             )))
         }
     }
@@ -93,7 +93,7 @@ pub struct Entry {
 
 impl ::std::fmt::Show for Entry {
     fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> Result<(), ::std::fmt::Error> {
-        fmt.write_str(format!("Entry {{ type: {}, count: {}, offset: {} }}",
+        fmt.write_str(format!("Entry {{ type: {:?}, count: {}, offset: {:?} }}",
             self.type_,
             self.count,
             self.offset.as_slice()

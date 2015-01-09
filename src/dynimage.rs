@@ -337,7 +337,7 @@ impl DynamicImage {
             }
 
             _ => Err(image::ImageError::UnsupportedError(
-                     format!("An encoder for {} is not available.", format))
+                     format!("An encoder for {:?} is not available.", format))
                  ),
         };
 
@@ -527,7 +527,7 @@ pub fn load<R: Reader+Seek>(r: R, format: ImageFormat) -> ImageResult<DynamicIma
         image::ImageFormat::WEBP => decoder_to_image(webp::WebpDecoder::new(io::BufferedReader::new(r))),
         image::ImageFormat::TIFF => decoder_to_image(try!(tiff::TIFFDecoder::new(r))),
         image::ImageFormat::TGA => decoder_to_image(tga::TGADecoder::new(r)),
-        _ => Err(image::ImageError::UnsupportedError(format!("A decoder for {} is not available.", format))),
+        _ => Err(image::ImageError::UnsupportedError(format!("A decoder for {:?} is not available.", format))),
     }
 }
 

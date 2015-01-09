@@ -326,7 +326,7 @@ impl<R: Reader + Seek> TIFFDecoder<R> {
         match try!(self.find_tag(tag)) {
             Some(val) => Ok(val),
             None => Err(::image::ImageError::FormatError(format!(
-                "Required tag `{}` not found.", tag
+                "Required tag `{:?}` not found.", tag
             )))
         }
     }
@@ -350,7 +350,7 @@ impl<R: Reader + Seek> TIFFDecoder<R> {
                 &mut self.reader
             }
             method => return Err(::image::ImageError::UnsupportedError(format!(
-                "Compression method {} is unsupported", method
+                "Compression method {:?} is unsupported", method
             )))
         };
         Ok(match (color_type, buffer) {
@@ -364,7 +364,7 @@ impl<R: Reader + Seek> TIFFDecoder<R> {
                 try!(reader.read(buffer.slice_to_mut(length as usize)))
             }
             (type_, _) => return Err(::image::ImageError::UnsupportedError(format!(
-                "Color type {} is unsupported", type_
+                "Color type {:?} is unsupported", type_
             )))
         })
     }
@@ -384,7 +384,7 @@ impl<R: Reader + Seek> ImageDecoder for TIFFDecoder<R> {
             ([ n], PhotometricInterpretation::BlackIsZero)
             |([ n], PhotometricInterpretation::WhiteIsZero) => Ok(color::ColorType::Grey(n)),
             (bits, mode) => return Err(::image::ImageError::UnsupportedError(format!(
-                "{} with {} bits per sample is unsupported", mode, bits
+                "{:?} with {:?} bits per sample is unsupported", mode, bits
             ))) // TODO: this is bad we should not fail at this point
         }
     }

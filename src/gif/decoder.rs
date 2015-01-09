@@ -81,7 +81,7 @@ impl<R: Reader> GIFDecoder<R> {
                 Err(ImageError::FormatError("GIF signature not found.".to_string()))
             } else if version.as_slice() != b"87a" && version.as_slice() != b"89a" {
                 Err(ImageError::UnsupportedError(
-                    format!("GIF version {} is not supported.", version)
+                    format!("GIF version {:?} is not supported.", version)
                 ))
             } else {
                 self.state = State::HaveHeader;

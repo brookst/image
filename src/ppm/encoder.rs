@@ -76,7 +76,7 @@ impl<W: Writer> PPMEncoder<W> {
                 }
             }
 
-            a => panic!(format!("not implemented: {}", a))
+            a => panic!(format!("not implemented: {:?}", a))
         }
 
         Ok(())
