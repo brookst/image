@@ -99,7 +99,7 @@ pub trait ImageDecoder: Sized {
     fn colortype(&mut self) -> ImageResult<ColorType>;
 
     /// Returns the length in bytes of one decoded row of the image
-    fn row_len(&mut self) -> ImageResult<uint>;
+    fn row_len(&mut self) -> ImageResult<usize>;
     
     /// Returns true if the image is animated
     fn is_animated(&mut self) -> ImageResult<bool> {
@@ -137,7 +137,7 @@ pub trait ImageDecoder: Sized {
 
         let rowlen  = try!(self.row_len());
 
-        let mut buf = repeat(0u8).take(length as uint * width as uint * bpp).collect::<Vec<u8>>();
+        let mut buf = repeat(0u8).take(length as usize * width as usize * bpp).collect::<Vec<u8>>();
         let mut tmp = repeat(0u8).take(rowlen).collect::<Vec<u8>>();
 
         loop {
@@ -148,13 +148,13 @@ pub trait ImageDecoder: Sized {
             }
         }
 
-        for i in range(0, length as uint) {
+        for i in range(0, length as usize) {
             {
-                let from = tmp.slice_from(x as uint * bpp)
-                              .slice_to(width as uint * bpp);
+                let from = tmp.slice_from(x as usize * bpp)
+                              .slice_to(width as usize * bpp);
 
-                let to   = buf.slice_from_mut(i * width as uint * bpp)
-                              .slice_to_mut(width as uint * bpp);
+                let to   = buf.slice_from_mut(i * width as usize * bpp)
+                              .slice_to_mut(width as usize * bpp);
 
                 slice::bytes::copy_memory(to, from);
             }

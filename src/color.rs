@@ -26,18 +26,18 @@ pub enum ColorType {
 }
 
 /// Returns the number of bits contained in a pixel of ColorType c
-pub fn bits_per_pixel(c: ColorType) -> uint {
+pub fn bits_per_pixel(c: ColorType) -> usize {
     match c {
-        ColorType::Grey(n)    => n as uint,
-        ColorType::RGB(n)     => 3 * n as uint,
-        ColorType::Palette(n) => 3 * n as uint,
-        ColorType::GreyA(n)   => 2 * n as uint,
-        ColorType::RGBA(n)    => 4 * n as uint,
+        ColorType::Grey(n)    => n as usize,
+        ColorType::RGB(n)     => 3 * n as usize,
+        ColorType::Palette(n) => 3 * n as usize,
+        ColorType::GreyA(n)   => 2 * n as usize,
+        ColorType::RGBA(n)    => 4 * n as usize,
     }
 }
 
 /// Returns the number of color channels that make up this pixel
-pub fn num_components(c: ColorType) -> uint {
+pub fn num_components(c: ColorType) -> usize {
     match c {
         ColorType::Grey(_)    => 1,
         ColorType::RGB(_)     => 3,
@@ -165,11 +165,11 @@ impl<T: Primitive> Pixel<T> for $ident<T> {
     #[allow(unused_typecasts)]
     fn apply_with_alpha<F, G>(&mut self, f: F, g: G) where F: Fn(T) -> T, G: Fn(T) -> T {
         let &$ident(ref mut this) = self;
-        for v in this.as_mut_slice().slice_to_mut($channels as uint-$alphas as uint).iter_mut() {
+        for v in this.as_mut_slice().slice_to_mut($channels as usize-$alphas as usize).iter_mut() {
             *v = f(*v)
         }
-        if $alphas as uint != 0 {
-            let ref mut v = this.as_mut_slice()[$channels as uint-$alphas as uint-1];
+        if $alphas as usize != 0 {
+            let ref mut v = this.as_mut_slice()[$channels as usize-$alphas as usize-1];
             *v = g(*v)
         }
     }
@@ -198,19 +198,19 @@ impl<T: Primitive> Pixel<T> for $ident<T> {
     }
 }
 
-impl<T: Primitive> Index<uint> for $ident<T> {
+impl<T: Primitive> Index<usize> for $ident<T> {
     type Output = T;
     #[inline(always)]
-    fn index<'a>(&'a self, _index: &uint) -> &'a T {
+    fn index<'a>(&'a self, _index: &usize) -> &'a T {
         let &$ident(ref this) = self;
         &this[*_index]
     }
 }
 
-impl<T: Primitive> IndexMut<uint> for $ident<T> {
+impl<T: Primitive> IndexMut<usize> for $ident<T> {
     type Output = T;
     #[inline(always)]
-    fn index_mut<'a>(&'a mut self, _index: &uint) -> &'a mut T {
+    fn index_mut<'a>(&'a mut self, _index: &usize) -> &'a mut T {
         let &$ident(ref mut this) = self;
         &mut this[*_index]
     }

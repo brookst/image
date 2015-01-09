@@ -319,7 +319,7 @@ pub fn filter3x3<P: Primitive + 'static, T: Pixel<P> + 'static, I: GenericImage<
     kernel: &[f32]) -> ImageBuffer<Vec<P>, P, T> {
 
     // The kernel's input positions relative to the current pixel.
-    let taps: &[(int, int)] = &[
+    let taps: &[(isize, isize)] = &[
         (-1, -1), ( 0, -1), ( 1, -1),
         (-1,  0), ( 0,  0), ( 1,  0),
         (-1,  1), ( 0,  1), ( 1,  1),
@@ -353,8 +353,8 @@ pub fn filter3x3<P: Primitive + 'static, T: Pixel<P> + 'static, I: GenericImage<
             // Only a subtract and addition is needed for pixels after the first
             // in each row.
             for (&k, &(a, b)) in kernel.iter().zip(taps.iter()) {
-                let x0 = x as int + a;
-                let y0 = y as int + b;
+                let x0 = x as isize + a;
+                let y0 = y as isize + b;
 
                 let p = image.get_pixel(x0 as u32, y0 as u32);
 

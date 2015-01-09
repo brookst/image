@@ -410,8 +410,8 @@ pub fn decoder_to_image<I: ImageDecoder>(codec: I) -> ImageResult<DynamicImage> 
         }
         (color::ColorType::Grey(bit_depth), U8(ref buf)) if bit_depth == 1 || bit_depth == 2 || bit_depth == 4 => {
             // Note: this conversion assumes that the scanlines begin on byte boundaries 
-            let mask = (1u8 << bit_depth as uint) - 1;
-            let scaling_factor = (255)/((1 << bit_depth as uint) - 1);
+            let mask = (1u8 << bit_depth as usize) - 1;
+            let scaling_factor = (255)/((1 << bit_depth as usize) - 1);
             let skip = (w % 8)/bit_depth as u32;
             let row_len = w + skip;
             let p = buf.as_slice()
@@ -424,9 +424,9 @@ pub fn decoder_to_image<I: ImageDecoder>(codec: I) -> ImageResult<DynamicImage> 
                        ))
                        // skip the pixels that can be neglected because scanlines should
                        // start at byte boundaries
-                       .enumerate().filter(|&(i, _)| i % (row_len as uint) < (w as uint) ).map(|(_, p)| p)
+                       .enumerate().filter(|&(i, _)| i % (row_len as usize) < (w as usize) ).map(|(_, p)| p)
                        .map(|(shift, pixel)|
-                           (pixel & mask << shift as uint) >> shift as uint
+                           (pixel & mask << shift as usize) >> shift as usize
                        )
                        .map(|pixel| pixel * scaling_factor)
                        .collect();

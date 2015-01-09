@@ -128,7 +128,7 @@ impl Entry {
             (Type::SHORT, 1) => Ok(Value::Unsigned(try!(self.r(bo).read_u16()) as u32)),
             (Type::LONG, 1) => Ok(Value::Unsigned(try!(self.r(bo).read_u32()))),
             (Type::LONG, n) => {
-                let mut v = Vec::with_capacity(n as uint);
+                let mut v = Vec::with_capacity(n as usize);
                 try!(decoder.goto_offset(try!(self.r(bo).read_u32())));
                 for _ in range(0, n) {
                     v.push(Value::Unsigned(try!(decoder.read_long())))
