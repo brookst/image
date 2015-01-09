@@ -50,9 +50,9 @@ pub fn num_components(c: ColorType) -> usize {
 macro_rules! define_colors {
     {$(
         $ident:ident
-        $channels: expr
-        $alphas: expr
-        $interpretation: expr
+        $channels: expr,
+        $alphas: expr,
+        $interpretation: expr,
         #[$doc:meta];
     )*} => {
 
@@ -222,10 +222,10 @@ impl<T: Primitive> IndexMut<usize> for $ident<T> {
 }
 
 define_colors! {
-    Rgb 3 0 "RGB" #[doc = "RGB colors"];
-    Luma 1 0 "Y" #[doc = "Grayscale colors"];
-    Rgba 4 1 "RGBA" #[doc = "RGB colors + alpha channel"];
-    LumaA 2 1 "YA" #[doc = "Grayscale colors + alpha channel"];
+    Rgb 3,0,"RGB",#[doc = "RGB colors"];
+    Luma 1,0,"Y",#[doc = "Grayscale colors"];
+    Rgba 4,1,"RGBA",#[doc = "RGB colors + alpha channel"];
+    LumaA 2,1,"YA",#[doc = "Grayscale colors + alpha channel"];
 }
 
 
