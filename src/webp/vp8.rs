@@ -856,7 +856,7 @@ impl<R: Reader> VP8Decoder<R> {
             num_partitions: 1,
 
             segment_tree_probs: [255u8; 3],
-            token_probs: box COEFF_PROBS,
+            token_probs: Box::new(COEFF_PROBS),
 
             // Section 9.10
             prob_intra: 0u8,

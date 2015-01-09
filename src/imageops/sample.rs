@@ -405,23 +405,23 @@ pub fn resize<A: Primitive + 'static, T: Pixel<A> + 'static, I: GenericImage<T>>
 
     let mut method = match filter {
         FilterType::Nearest    =>   Filter {
-            kernel: box |&: x| box_kernel(x),
+            kernel: Box::new(|&: x| box_kernel(x)),
             support: 0.5
         },
         FilterType::Triangle   => Filter {
-            kernel: box |&: x| triangle_kernel(x),
+            kernel: Box::new(|&: x| triangle_kernel(x)),
             support: 1.0
         },
         FilterType::CatmullRom => Filter {
-            kernel: box |&: x| catmullrom_kernel(x),
+            kernel: Box::new(|&: x| catmullrom_kernel(x)),
             support: 2.0
         },
         FilterType::Gaussian   => Filter {
-            kernel: box |&: x| gaussian_kernel(x),
+            kernel: Box::new(|&: x| gaussian_kernel(x)),
             support: 3.0
         },
         FilterType::Lanczos3   => Filter {
-            kernel: box |&: x| lanczos3_kernel(x),
+            kernel: Box::new(|&: x| lanczos3_kernel(x)),
             support: 3.0
         },
 };
@@ -443,7 +443,7 @@ pub fn blur<A: Primitive + 'static, T: Pixel<A> + 'static, I: GenericImage<T>>(
     };
 
     let mut method = Filter {
-        kernel: box |&: x| gaussian(x, sigma),
+        kernel: Box::new(|&: x| gaussian(x, sigma)),
         support: 2.0 * sigma
     };
 
