@@ -176,6 +176,7 @@ pub struct Pixels<'a, I:'a> {
     height: u32
 }
 
+#[old_impl_check]
 impl<'a, T: Primitive, P: Pixel<T>, I: GenericImage<P>> Iterator for Pixels<'a, I> {
     type Item = (u32, u32, P);
     fn next(&mut self) -> Option<(u32, u32, P)> {
@@ -207,6 +208,7 @@ pub struct MutPixels<'a, I:'a> {
     height: u32
 }
 
+#[old_impl_check]
 impl<'a, T: Primitive, P: Pixel<T>, I: GenericImage<P>> Iterator for MutPixels<'a, I> {
     type Item = (u32, u32, &'a mut P);
     fn next(&mut self) -> Option<(u32, u32, &'a mut P)> {
@@ -311,6 +313,7 @@ pub struct SubImage <'a, I:'a> {
     ystride: u32,
 }
 
+#[old_impl_check]
 impl<'a, T: Primitive + 'static, P: Pixel<T> + 'static, I: GenericImage<P>> SubImage<'a, I> {
     /// Construct a new subimage
     pub fn new(image: &mut I, x: u32, y: u32, width: u32, height: u32) -> SubImage<I> {
@@ -352,6 +355,7 @@ impl<'a, T: Primitive + 'static, P: Pixel<T> + 'static, I: GenericImage<P>> SubI
 }
 
 #[allow(deprecated)]
+#[old_impl_check]
 impl<'a, T: Primitive, P: Pixel<T>, I: GenericImage<P>> GenericImage<P> for SubImage<'a, I> {
     fn dimensions(&self) -> (u32, u32) {
         (self.xstride, self.ystride)
